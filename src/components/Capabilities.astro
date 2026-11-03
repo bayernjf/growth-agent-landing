@@ -1,0 +1,68 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const cards = [
+  { no: "01", title: "caps.c1.title", desc: "caps.c1.desc" },
+  { no: "02", title: "caps.c2.title", desc: "caps.c2.desc" },
+  { no: "03", title: "caps.c3.title", desc: "caps.c3.desc" },
+  { no: "04", title: "caps.c4.title", desc: "caps.c4.desc" },
+] as const;
+---
+
+<section class="sec caps" id="capabilities">
+  <div class="shell">
+    <div class="sec__head">
+      <p class="kicker">{t("caps.kicker")}</p>
+      <h2 class="sec__title">{t("caps.title")}</h2>
+      <p class="sec__sub">{t("caps.sub")}</p>
+    </div>
+    <div class="caps__grid">
+      {
+        cards.map((c) => (
+          <article class="panel caps__card">
+            <span class="caps__no">{c.no}</span>
+            <h3 class="caps__name">{t(c.title)}</h3>
+            <p class="caps__desc">{t(c.desc)}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .caps__grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .caps__card {
+    padding: 26px 26px 24px;
+  }
+  .caps__no {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--grow);
+  }
+  .caps__name {
+    margin-top: 12px;
+    font-size: 19px;
+  }
+  .caps__desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-dim);
+  }
+  @media (max-width: 760px) {
+    .caps__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

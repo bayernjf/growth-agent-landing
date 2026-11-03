@@ -1,0 +1,108 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps = [
+  { no: "1", title: "flow.s1.title", desc: "flow.s1.desc", cmd: "flow.s1.cmd" },
+  { no: "2", title: "flow.s2.title", desc: "flow.s2.desc", cmd: "flow.s2.cmd" },
+  { no: "3", title: "flow.s3.title", desc: "flow.s3.desc", cmd: "flow.s3.cmd" },
+  { no: "4", title: "flow.s4.title", desc: "flow.s4.desc", cmd: null },
+  { no: "5", title: "flow.s5.title", desc: "flow.s5.desc", cmd: null },
+] as const;
+---
+
+<section class="sec flow" id="workflow">
+  <div class="shell">
+    <div class="sec__head">
+      <p class="kicker">{t("flow.kicker")}</p>
+      <h2 class="sec__title">{t("flow.title")}</h2>
+      <p class="sec__sub">{t("flow.sub")}</p>
+    </div>
+    <ol class="flow__list">
+      {
+        steps.map((s) => (
+          <li class="flow__step">
+            <span class="flow__no" aria-hidden="true">
+              {s.no}
+            </span>
+            <div class="flow__body">
+              <h3 class="flow__name">{t(s.title)}</h3>
+              <p class="flow__desc">{t(s.desc)}</p>
+              {s.cmd && <code class="flow__cmd">{t(s.cmd)}</code>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .flow__list {
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0;
+    counter-reset: step;
+  }
+  .flow__step {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    padding: 24px 0;
+    border-top: 1px solid var(--steel-700);
+  }
+  .flow__step:last-child {
+    border-bottom: 1px solid var(--steel-700);
+  }
+  .flow__no {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--grow-dim);
+    color: var(--grow);
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 800;
+  }
+  /* grid item default min-width:auto would let the nowrap command blow out
+     the track on narrow screens */
+  .flow__body {
+    min-width: 0;
+  }
+  .flow__name {
+    font-size: 18px;
+  }
+  .flow__desc {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-dim);
+    max-width: 760px;
+  }
+  .flow__cmd {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--steel-850);
+    border: 1px solid var(--steel-700);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  @media (max-width: 640px) {
+    .flow__step {
+      grid-template-columns: 34px 1fr;
+      gap: 14px;
+    }
+  }
+</style>

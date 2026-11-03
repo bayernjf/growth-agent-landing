@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import LegalLayout from "../components/LegalLayout.astro";
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t("legal.privacyTitle")} description={t("legal.privacyBody")}>
+  <LegalLayout
+    title={t("legal.privacyTitle")}
+    body={t("legal.privacyBody")}
+    updated="2026-11-02"
+  />
+</Layout>

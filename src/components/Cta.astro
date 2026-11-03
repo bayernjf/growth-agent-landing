@@ -1,0 +1,171 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+import { SOCIAL } from "../consts";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="cta" id="cta">
+  <div class="shell">
+    <div class="panel cta__panel">
+      <div class="cta__copy">
+        <h2 class="cta__title">{t("cta.title")}</h2>
+        <p class="cta__sub">{t("cta.sub")}</p>
+      </div>
+      <form
+        class="cta__form"
+        data-cta-form
+        data-invalid={t("cta.form.invalid")}
+        data-opening={t("cta.form.opening")}
+        novalidate
+      >
+        <div class="cta__field">
+          <label for="cta-name">{t("cta.form.name")}</label>
+          <input id="cta-name" name="name" type="text" autocomplete="name" />
+        </div>
+        <div class="cta__field">
+          <label for="cta-email">{t("cta.form.email")}</label>
+          <input
+            id="cta-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            aria-describedby="cta-note"
+          />
+        </div>
+        <div class="cta__field">
+          <label for="cta-sites">{t("cta.form.platforms")}</label>
+          <textarea id="cta-sites" name="sites" rows="3" required aria-describedby="cta-note"
+          ></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">{t("cta.form.submit")}</button>
+        <p id="cta-note" class="cta__note">{t("cta.form.note")}</p>
+        <p class="cta__status" role="status" aria-live="polite" data-cta-status></p>
+        <p class="cta__fallback">
+          {t("cta.form.fallback")}
+          <a href={`mailto:${SOCIAL.email}`}>{SOCIAL.email}</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Progressive enhancement only: the static site has no backend, so the form
+  // composes a mail draft instead of pretending a submission was stored.
+  const email = document.querySelector<HTMLAnchorElement>(".cta__fallback a")?.textContent ?? "";
+  document.querySelectorAll<HTMLFormElement>("[data-cta-form]").forEach((form) => {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const address = String(data.get("email") ?? "").trim();
+      const sites = String(data.get("sites") ?? "").trim();
+      if (!address || !sites) {
+        const status = form.querySelector<HTMLElement>("[data-cta-status]");
+        const msg = form.dataset.invalid ?? "Please fill in the required fields.";
+        if (status) status.textContent = msg;
+        (address ? form.querySelector<HTMLElement>("textarea") : form.querySelector<HTMLElement>('input[type="email"]'))?.focus();
+        return;
+      }
+      const name = String(data.get("name") ?? "").trim();
+      const subject = `growth-agent dogfood — ${sites.split("\n")[0]?.slice(0, 60) ?? ""}`;
+      const body = [
+        name ? `Name: ${name}` : "",
+        `Email: ${address}`,
+        "",
+        "Sites / stack:",
+        sites,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      const status = form.querySelector<HTMLElement>("[data-cta-status]");
+      if (status) status.textContent = form.dataset.opening ?? "";
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>
+
+<style>
+  .cta {
+    padding: 72px 0 88px;
+  }
+  .cta__panel {
+    padding: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+    background:
+      radial-gradient(circle at 85% 20%, rgba(74, 222, 128, 0.09), transparent 45%),
+      var(--steel-900);
+  }
+  .cta__copy {
+    flex: 1 1 320px;
+  }
+  .cta__title {
+    font-size: clamp(24px, 3vw, 34px);
+  }
+  .cta__sub {
+    margin-top: 10px;
+    color: var(--ink-dim);
+    max-width: 520px;
+  }
+  .cta__form {
+    flex: 1 1 340px;
+    display: grid;
+    gap: 14px;
+  }
+  .cta__field {
+    display: grid;
+    gap: 6px;
+  }
+  .cta__field label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink-dim);
+  }
+  .cta__field input,
+  .cta__field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: var(--hair);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--ink);
+    font: inherit;
+    resize: vertical;
+  }
+  .cta__field input:focus-visible,
+  .cta__field textarea:focus-visible {
+    outline: 2px solid var(--grow);
+    outline-offset: 1px;
+  }
+  .cta__form .btn {
+    justify-content: center;
+  }
+  .cta__note,
+  .cta__fallback,
+  .cta__status {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+  .cta__fallback a {
+    color: var(--grow);
+  }
+  .cta__status {
+    color: var(--grow);
+    min-height: 1em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+    }
+  }
+</style>

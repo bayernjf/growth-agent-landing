@@ -1,0 +1,27 @@
+---
+// growth-agent mark — an ascending trend line checked by an amber gate dot:
+// growth happens, but only past the human gate.
+const size = Astro.props.size ?? 32;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 32 32"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="growth-agent"
+>
+  <rect x="3" y="3" width="26" height="26" rx="6" fill="var(--steel-900)" stroke="var(--steel-500)" />
+  <!-- ascending trend line -->
+  <path
+    d="M8 22L13.5 16.5L17.5 19.5L23 12"
+    stroke="var(--grow)"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- the human gate the line must pass -->
+  <circle cx="23" cy="12" r="2.4" fill="var(--steel-900)" stroke="var(--amber)" stroke-width="1.6" />
+</svg>

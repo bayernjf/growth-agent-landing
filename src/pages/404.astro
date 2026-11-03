@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import { getLangFromUrl } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const title = lang === "zh" ? "404 · 页面未找到" : "404 · Page not found";
+---
+
+<Layout title={title} description={title}>
+  <main class="nf">
+    <h1 class="nf__code">404</h1>
+    <p class="nf__msg">
+      {lang === "zh" ? "这条流水线上没有这个批次。" : "No such batch on this line."}
+    </p>
+    <a class="btn btn--primary" href={lang === "zh" ? "/zh/" : "/"}>
+      {lang === "zh" ? "回到首页" : "Back home"}
+    </a>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .nf {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    padding: 80px 24px;
+  }
+  .nf__code {
+    font-family: var(--mono);
+    font-size: clamp(64px, 12vw, 120px);
+    color: var(--grow);
+    letter-spacing: 0.04em;
+  }
+  .nf__msg {
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+  }
+</style>

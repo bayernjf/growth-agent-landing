@@ -1,0 +1,58 @@
+---
+import Footer from "./Footer.astro";
+import { getLangFromUrl, useTranslations, localizePath } from "../i18n";
+
+interface Props {
+  title: string;
+  body: string;
+  updated: string;
+}
+
+const { title, body, updated } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<main class="legal">
+  <div class="shell legal__inner">
+    <p class="kicker">growth-agent</p>
+    <h1 class="legal__title">{title}</h1>
+    <p class="legal__updated">
+      {t("legal.updated")}: {updated}
+    </p>
+    <p class="legal__body">{body}</p>
+    <a class="legal__back" href={localizePath("/", lang)}>← growth-agent</a>
+  </div>
+</main>
+<Footer />
+
+<style>
+  .legal {
+    padding: 96px 0 72px;
+  }
+  .legal__inner {
+    max-width: 720px;
+  }
+  .legal__title {
+    margin-top: 14px;
+    font-size: clamp(28px, 4vw, 44px);
+  }
+  .legal__updated {
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .legal__body {
+    margin-top: 28px;
+    color: var(--ink-dim);
+    line-height: 1.8;
+  }
+  .legal__back {
+    display: inline-block;
+    margin-top: 40px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--grow);
+  }
+</style>

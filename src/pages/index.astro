@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hud from "../components/Hud.astro";
+import Hero from "../components/Hero.astro";
+import Capabilities from "../components/Capabilities.astro";
+import Workflow from "../components/Workflow.astro";
+import Guardrails from "../components/Guardrails.astro";
+import Audience from "../components/Audience.astro";
+import Cta from "../components/Cta.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <Hud />
+  <main>
+    <Hero />
+    <div data-reveal><Capabilities /></div>
+    <div data-reveal><Workflow /></div>
+    <div data-reveal><Guardrails /></div>
+    <div data-reveal><Audience /></div>
+    <div data-reveal><Cta /></div>
+  </main>
+  <Footer />
+</Layout>

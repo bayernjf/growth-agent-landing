@@ -1,0 +1,72 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const guards = ["guard.g1", "guard.g2", "guard.g3", "guard.g4", "guard.g5", "guard.g6"] as const;
+---
+
+<section class="sec guard" id="guardrails">
+  <div class="shell">
+    <div class="sec__head">
+      <p class="kicker kicker--amber">{t("guard.kicker")}</p>
+      <h2 class="sec__title">{t("guard.title")}</h2>
+      <p class="sec__sub">{t("guard.sub")}</p>
+    </div>
+    <ul class="guard__grid">
+      {
+        guards.map((g) => (
+          <li class="panel guard__item">
+            <span class="guard__mark" aria-hidden="true"></span>
+            <p>{t(g)}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .kicker--amber {
+    color: var(--amber);
+  }
+  .guard__grid {
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .guard__item {
+    padding: 20px 22px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .guard__item p {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+  .guard__mark {
+    flex: none;
+    margin-top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--amber);
+    box-shadow: 0 0 10px rgba(255, 179, 64, 0.35);
+  }
+  @media (max-width: 980px) {
+    .guard__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .guard__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

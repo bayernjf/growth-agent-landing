@@ -1,0 +1,77 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const personas = [
+  { tag: "aud.p1.tag", title: "aud.p1.title", desc: "aud.p1.desc", active: true },
+  { tag: "aud.p2.tag", title: "aud.p2.title", desc: "aud.p2.desc", active: false },
+  { tag: "aud.p3.tag", title: "aud.p3.title", desc: "aud.p3.desc", active: false },
+] as const;
+---
+
+<section class="sec aud" id="audience">
+  <div class="shell">
+    <div class="sec__head">
+      <p class="kicker">{t("aud.kicker")}</p>
+      <h2 class="sec__title">{t("aud.title")}</h2>
+      <p class="sec__sub">{t("aud.sub")}</p>
+    </div>
+    <div class="aud__grid">
+      {
+        personas.map((p) => (
+          <article class:list={["panel aud__card", { "aud__card--active": p.active }]}>
+            <span class="aud__tag">{t(p.tag)}</span>
+            <h3 class="aud__name">{t(p.title)}</h3>
+            <p class="aud__desc">{t(p.desc)}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .aud__grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .aud__card {
+    padding: 24px 24px 22px;
+  }
+  .aud__card--active {
+    border-color: var(--grow-dim);
+    background:
+      radial-gradient(circle at 85% 0%, rgba(74, 222, 128, 0.07), transparent 55%),
+      var(--steel-900);
+  }
+  .aud__tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .aud__card--active .aud__tag {
+    color: var(--grow);
+  }
+  .aud__name {
+    margin-top: 12px;
+    font-size: 18px;
+  }
+  .aud__desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-dim);
+  }
+  @media (max-width: 980px) {
+    .aud__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
