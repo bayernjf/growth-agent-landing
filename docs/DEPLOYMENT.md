@@ -1,12 +1,13 @@
 # 部署 — growth-agent-landing
 
-更新时间：2026-11-02
+更新时间：2026-11-03
 
 ## 站点信息
-- Pages 项目：**未创建**（待建，建议名 `growth-agent-landing`）
-- GitHub 仓库：**未创建**（建议 `bayernjf/growth-agent-landing`）
+- Pages 项目：**已创建** `growth-agent-landing`（Git 集成，生产分支 `main`）
+- GitHub 仓库：**已创建** `bayernjf/growth-agent-landing`（public，`main` + `dev`）
+- 线上地址：`https://growth-agent-landing.pages.dev`（2026-11-03 首版构建成功）
 - 自定义域名：`growth-agent.bayjf.com`〔**待 owner 确认**〕（确认后加 Custom Domain，
-  DNS 加 `CNAME growth-agent → <pages 分配域名>`，Proxied）
+  DNS 加 `CNAME growth-agent → growth-agent-landing.pages.dev`，Proxied）
 - 技术栈：Astro 7（SSG）+ `@bay/landing-ui` + `@astrojs/sitemap`
 - Node：`>=22.12.0`；包管理器 npm
 
@@ -17,11 +18,11 @@ npm run build     # astro build && node scripts/shot.mjs
 npm run preview
 ```
 
-## 上线待办（按顺序）
-1. 建 GitHub 远端仓库 `bayernjf/growth-agent-landing` 并推送（`main` 为生产分支，
-   日常开发在 `dev`）。
-2. Cloudflare Pages 建项目 `growth-agent-landing`，连接该 GitHub 仓库（Git 集成）。
-3. Pages 构建配置（与 loom-landing / agent-world-landing 一致）：
+## 上线待办（剩余）
+1. ~~建 GitHub 远端仓库~~（已完成 `bayernjf/growth-agent-landing`，`main` 生产，
+   `dev` 日常开发）。
+2. ~~Cloudflare Pages 建项目并连接仓库~~（已完成，Git 集成）。
+3. ~~Pages 构建配置~~（已完成）：
 
    | 配置项 | 值 |
    |---|---|
@@ -32,7 +33,7 @@ npm run preview
 
 4. owner 确认域名后：Pages 加 Custom Domain `growth-agent.bayjf.com`，DNS 加 CNAME
    （Proxied）；若最终域名不同，按「改域名时的同步点」逐项替换。
-5. 推送 `dev` 验证 preview 部署，合并 `main` 发版。
+5. 推送 `dev` 验证 preview 部署（首个 preview 部署随 dev 分支推送产生）。
 
 ## 发布后验证
 1. 英文首页（`/`）与中文首页（`/zh/`）可访问。

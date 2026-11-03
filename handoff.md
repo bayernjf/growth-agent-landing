@@ -1,12 +1,16 @@
 # Handoff — growth-agent-landing
 
-State of growth-agent-landing as of 2026-11-02.
+State of growth-agent-landing as of 2026-11-03.
 
-> 一句话：落地页从零建好，双语 + 构建 + 截图管线齐全；**未建仓、未推送、未部署**，
-> 上线待办见 `docs/DEPLOYMENT.md`。
+> 一句话：落地页已建仓并上线初版（`https://growth-agent-landing.pages.dev`），
+> 自定义域名仍是占位，待 owner 确认。
 
 ## 已完成
 
+- 已建 GitHub 仓库 `bayernjf/growth-agent-landing`（public，`main` + `dev`）。
+- 已建 Cloudflare Pages 项目 `growth-agent-landing`（Git 集成，生产分支 `main`），
+  首版构建成功；`/`、`/zh/`、`/privacy/`、`/terms/`、`robots.txt`、`sitemap-index.xml`
+  实测均返回 200。
 - Astro 7 静态站（`output: 'static'`），结构与最新惯例仓 loom-landing 对齐：
   `consts.ts` 单一域名源、`i18n/ui.ts` 双语文案字典 + 编译期键校验、SEO 组件
   （canonical + hreflang ×3 + OG/Twitter + JSON-LD `@graph`）、`@astrojs/sitemap`、
@@ -39,8 +43,10 @@ State of growth-agent-landing as of 2026-11-02.
 
 ## 待办（上线前）
 
-- 建 GitHub 仓库、建 Pages 项目、绑域名（步骤见 `docs/DEPLOYMENT.md`）。
-- 域名确认后替换 `src/consts.ts` 的 `SITE_URL` 占位（`growth-agent.bayjf.com`）。
+- ~~建 GitHub 仓库、建 Pages 项目~~（已完成，见上）。
+- 自定义域名 `growth-agent.bayjf.com` 待 owner 确认：Pages 加 Custom Domain + DNS CNAME。
+- 域名确认后替换 `src/consts.ts` 的 `SITE_URL` 占位（`growth-agent.bayjf.com`），
+  并同步 `public/robots.txt` 的 Sitemap 地址。
 - 隐私 / 条款为占位文案，公开上线前需完善（`src/i18n/ui.ts` 的 `legal.*`）。
 - 产品仓 `github.com/bayernjf/growth-agent` 当前为私有仓；落地页 Star / README
   链接在外部访客点开是 404，上线前需确认是否转公开或调整链接。
