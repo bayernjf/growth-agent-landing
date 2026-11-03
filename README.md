@@ -66,10 +66,15 @@ src/styles/        global.css
 
 ## 部署到 Cloudflare Pages（Git 集成）
 
-**尚未创建 Pages 项目与域名**，上线步骤与待办见 `docs/DEPLOYMENT.md`。配置与其他
-`*-landing` 仓一致（Production branch `main`，build command
-`npx playwright install chromium && npm run build`，output `dist`，
-`NODE_VERSION=22` + `PLAYWRIGHT_BROWSERS_PATH=0`）。
+已上线：GitHub 仓库 `bayernjf/growth-agent-landing`（public），Pages 项目
+`growth-agent-landing` 已连接该仓库，推送 `main` 自动构建发版，其它分支产出 preview。
+站点：`https://growth-agent-landing.pages.dev`。其余配置（Production branch `main`、
+build command `npx playwright install chromium && npm run build`、output `dist`、
+`NODE_VERSION=22` + `PLAYWRIGHT_BROWSERS_PATH=0`）与其他 `*-landing` 仓一致。
+
+待办：自定义域名 `growth-agent.bayjf.com`〔**待域名确认**〕；确认后加 Custom Domain
+与 DNS CNAME，并同步 `src/consts.ts` 的 `SITE_URL`、`public/robots.txt` 的 Sitemap 地址。
+详细步骤见 `docs/DEPLOYMENT.md`。
 
 ## SEO
 
