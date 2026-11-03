@@ -1,0 +1,45 @@
+# growth-agent — 自托管、BYOK、每天交 PR 的极简增长 Agent
+
+growth-agent 每天产出 **1 篇新内容 PR + 1 个页面修复 PR**，全部经 zeus 决策内核分级
+（D2 人审，slaHours=24h）并由人在 GitHub 合并；每周产出一份排名变化报告。
+
+## 定位
+
+- 与全功能套件（Semrush/Ahrefs）不同：不卖仪表盘，卖「每天替你完成一件增长工作」。
+- 与云托管方案不同：**数据留在用户自己的基础设施**（docker/VPS 自托管），GSC 只读
+  授权与 SERP API key 由用户自带（BYOK），发布的最后一步永远是人工合并。
+
+## 核心闭环
+
+1. **每天 1 写**：GSC 快照信号（掉流量页 / 未覆盖查询）→ zeus D2 人审 → 草稿
+   （inbox / loom）→ GitHub PR（附证据）→ 人合并。
+2. **每天 1 修**：排名下滑页面的标题 / meta / 正文改写 PR，同一审批链；fix 任务只用
+   自己目标页做需求证据。
+3. **监控**：每日 GSC 只读快照 + SERP 排名追踪（BYOK），作为次日任务信号源。
+4. **周报**：采用率、人工修改量、排名/展示/点击变化、API 成本；版本化、只追加、
+   不发邮件。
+
+## 硬约束（不可配置关闭）
+
+- 内容发布一律 D2 人审（24h SLA），无自动放行路径。
+- bot 只开 PR / 建草稿，永不自动合并。
+- 每日硬上限 1 写 + 1 修。
+- GSC 严格只读（`webmasters.readonly`），refresh token AES-256-GCM 加密落盘。
+- QA 三闸（意图 / 查重 / 价值）在 PR 打开前执行，结果对人可见。
+- 连接器默认离线 fixture；online 缺凭据一律 fail-closed，不静默回退。
+
+## 技术形态
+
+Node 22 + TypeScript strict + Hono；SQLite（本地）/ Postgres（生产）双方言；
+docker compose 一键自托管（单机 2C4G）；与 zeus / growth-os / loom 内核只走
+HTTP / openapi，不改内核一行。
+
+## 状态
+
+发布前（W1–W11 已完成，`npm run check:all` 五门全绿）；dogfood 与定价待评审，
+暂未对外售卖。文案数字以产品仓库 docs/ 为准。
+
+## 链接
+
+- 落地页：https://growth-agent.bayjf.com（English）· https://growth-agent.bayjf.com/zh/（简体中文）〔占位域名，待确认〕
+- 产品仓库：https://github.com/bayernjf/growth-agent

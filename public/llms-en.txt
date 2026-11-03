@@ -1,0 +1,51 @@
+# growth-agent — Self-hosted, BYOK growth agent that ships one PR a day
+
+growth-agent ships **one new-content PR and one page-fix PR every day**. Every publish
+decision is graded by the zeus decision kernel (D2 human review, slaHours=24h) and merged
+by a human on GitHub. Once a week it writes a ranking-change report.
+
+## Positioning
+
+- Unlike full SEO suites (Semrush/Ahrefs): it does not sell a dashboard — it sells
+  "one finished unit of growth work per day".
+- Unlike cloud-hosted agents: **data stays on your own infrastructure** (docker/VPS
+  self-hosted); the GSC read-only grant and the SERP API key are yours (BYOK); the last
+  step online is always a human merge.
+
+## Core loop
+
+1. **One write a day**: signals from GSC snapshots (pages losing impressions, uncovered
+   queries) → zeus D2 review → draft (inbox / loom) → GitHub PR with evidence → you merge.
+2. **One fix a day**: a rewrite PR (title / meta / content) for pages sliding in the
+   rankings, through the same approval chain; a fix task argues only from its own target
+   page's data.
+3. **Monitoring**: daily read-only GSC snapshots + SERP rank tracking (BYOK) feed the
+   next day's signals.
+4. **Weekly report**: adoption rate, human edits per PR, rank/impression/click deltas,
+   API cost — versioned, append-only, never emailed.
+
+## Hard constraints (cannot be switched off)
+
+- Content publish decisions are D2 human-reviewed (24h SLA); no auto-approval path exists.
+- The bot only opens PRs/drafts and never merges.
+- Hard daily cap: 1 write + 1 fix.
+- GSC strictly read-only (`webmasters.readonly`); refresh token sealed with AES-256-GCM.
+- QA triple gate (intent / dedupe / value) runs before a PR opens; results are visible.
+- Connectors default to offline fixtures; online mode missing credentials fails closed,
+  never silently falls back.
+
+## Technical shape
+
+Node 22 + strict TypeScript + Hono; SQLite (local) / Postgres (production) dual dialect;
+one-command docker compose self-hosting (2C4G box); talks to the zeus / growth-os / loom
+kernels over HTTP / openapi only, without modifying them.
+
+## Status
+
+Pre-launch (W1–W11 complete, `npm run check:all` green); dogfood and pricing pending
+review — not yet for sale. Figures on the site reconcile against the product repo docs/.
+
+## Links
+
+- Landing: https://growth-agent.bayjf.com (English) · https://growth-agent.bayjf.com/zh/ (简体中文) [placeholder domain, to be confirmed]
+- Product repo: https://github.com/bayernjf/growth-agent
