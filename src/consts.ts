@@ -1,7 +1,7 @@
 /** Site-level constants. The SEO component, sitemap and Astro config all read
  *  from here so the public URL only ever lives in one place. */
 
-/** 占位域名（待用户确认后修改）：参考 loom.bayjf.com / agent-world.bayjf.com 惯例。 */
+/** 正式域名：Pages Custom Domain 已绑定（2026-11-12），DNS CNAME 走 bayjf.com zone。 */
 export const SITE_URL = "https://growth-agent.bayjf.com";
 
 export const SITE_NAME = "growth-agent";
