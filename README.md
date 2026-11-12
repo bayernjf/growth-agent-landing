@@ -72,9 +72,10 @@ src/styles/        global.css
 build command `npx playwright install chromium && npm run build`、output `dist`、
 `NODE_VERSION=22` + `PLAYWRIGHT_BROWSERS_PATH=0`）与其他 `*-landing` 仓一致。
 
-待办：自定义域名 `growth-agent.bayjf.com`〔**待域名确认**〕；确认后加 Custom Domain
-与 DNS CNAME，并同步 `src/consts.ts` 的 `SITE_URL`、`public/robots.txt` 的 Sitemap 地址。
-详细步骤见 `docs/DEPLOYMENT.md`。
+自定义域名 `growth-agent.bayjf.com` 已通过 Pages API 绑定到本项目（2026-11-12），
+`src/consts.ts` 的 `SITE_URL` 与 `public/robots.txt` 的 Sitemap 地址已一致。
+DNS 侧需在 `bayjf.com` zone 加一条 `CNAME growth-agent → growth-agent-landing.pages.dev`
+（Proxied）；当前 Pages 域名状态为 pending，等 DNS 生效后自动签发证书。
 
 ## SEO
 
